@@ -2,7 +2,7 @@
 import type { CurrencyId } from '~/common/types/currency';
 
 export function loadForeignExchangeRates({
-  // base currency is unsupported by free api
+  // base currency is available only in the paid version of api
   // baseCurrencyId,
   currencyIds,
 }: {
