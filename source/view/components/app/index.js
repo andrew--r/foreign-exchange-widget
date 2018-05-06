@@ -4,6 +4,7 @@ import {
   setSourceCurrency,
   setTargetCurrency,
   setExchangeAmount,
+  requestLoadExchangeRates,
 } from '~/state/foreign-exchange/actions';
 import { calculateExchangeRate } from '~/state/foreign-exchange/selectors';
 import { AppView } from './view';
@@ -27,11 +28,13 @@ export const App = connect(
         sourceCurrencyId,
         targetCurrencyId,
       }),
+      ratesDataState: foreignExchange.rates.dataState,
     };
   },
   {
     onChangeSourceCurrency: setSourceCurrency,
     onChangeTargetCurrency: setTargetCurrency,
     onChangeExchangeAmount: setExchangeAmount,
+    onRequestLoadExchangeRates: requestLoadExchangeRates,
   },
 )(AppView);

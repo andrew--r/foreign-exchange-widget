@@ -1,13 +1,17 @@
 import { delay } from 'redux-saga';
 import { takeLatest, put, call, select } from 'redux-saga/effects';
 import { loadForeignExchangeRates } from '~/api';
-import { loadExchangeRates as createLoadExchangeRatesAction } from '~/state/foreign-exchange/actions';
+import { requestLoadExchangeRates } from '~/state/foreign-exchange/actions';
 
-export function* loadForeignExchangeRatesSaga(action) {
+export function* loadForeignExchangeRatesSaga() {
   try {
+    const { baseCurrencyId, currencyIds } = yield select((state) => ({
+      baseCurrencyId: state.foreignExchange.rates.baseCurrencyId,
+      currencyIds: state.user.currencyIds,
+    }));
     const result = yield call(loadForeignExchangeRates, {
-      baseCurrencyId: action.baseCurrencyId,
-      currencyIds: action.currencyIds,
+      baseCurrencyId,
+      currencyIds,
     });
 
     yield put({
@@ -26,17 +30,7 @@ export function* foreignExchangeSaga() {
   );
 
   while (true) {
-    const { baseCurrencyId, currencyIds } = yield select((state) => ({
-      baseCurrencyId: state.foreignExchange.rates.baseCurrencyId,
-      currencyIds: state.user.currencyIds,
-    }));
-
-    yield put(
-      createLoadExchangeRatesAction({
-        baseCurrencyId,
-        currencyIds,
-      }),
-    );
+    yield put(requestLoadExchangeRates());
     yield delay(1000000);
   }
 }

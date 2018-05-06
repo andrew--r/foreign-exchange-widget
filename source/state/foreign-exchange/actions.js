@@ -41,23 +41,13 @@ export function setExchangeAmount(amount: number): SetExchangeAmountAction {
   };
 }
 
-type LoadExchangeRatesAction = {
+type RequestLoadExchangeRatesAction = {
   +type: 'CURRENCY_EXCHANGE_LOAD_RATES_REQUEST',
-  +baseCurrencyId: CurrencyId,
-  +currencyIds: CurrencyId[],
 };
 
-export function loadExchangeRates({
-  baseCurrencyId,
-  currencyIds,
-}: {
-  baseCurrencyId: CurrencyId,
-  currencyIds: CurrencyId[],
-}): LoadExchangeRatesAction {
+export function requestLoadExchangeRates(): RequestLoadExchangeRatesAction {
   return {
     type: 'CURRENCY_EXCHANGE_LOAD_RATES_REQUEST',
-    baseCurrencyId,
-    currencyIds,
   };
 }
 
@@ -65,4 +55,4 @@ export type ForeignExchangeAction =
   | SetSourceCurrencyAction
   | SetTargetCurrencyAction
   | SetExchangeAmountAction
-  | LoadExchangeRatesAction;
+  | RequestLoadExchangeRatesAction;

@@ -2,6 +2,7 @@
 import * as React from 'react';
 import styles from './styles.css';
 
+import type { DataState } from '~/common/types/common';
 import type { CurrencyId } from '~/common/types/currency';
 import type { Wallet } from '~/common/types/wallet';
 
@@ -13,9 +14,11 @@ type Props = {|
   targetCurrencyWallet: Wallet,
   exchangeAmount: number,
   exchangeRate: number,
+  ratesDataState: DataState,
   onChangeSourceCurrency(CurrencyId): void,
   onChangeTargetCurrency(CurrencyId): void,
   onChangeExchangeAmount(number): void,
+  onRequestLoadExchangeRates(): void,
 |};
 
 export class AppView extends React.Component<Props> {
@@ -40,6 +43,34 @@ export class AppView extends React.Component<Props> {
     event.preventDefault();
   };
 
+  renderExchangeRate = () => {
+    switch (this.props.ratesDataState) {
+      case 'loading': {
+        return <p>Loading exchange rate...</p>;
+      }
+
+      case 'loaded': {
+        return (
+          <p>
+            1 {this.props.sourceCurrencyId} = {this.props.exchangeRate}{' '}
+            {this.props.targetCurrencyId}
+          </p>
+        );
+      }
+
+      default: {
+        return (
+          <p>
+            Failed to load exchange rates{' '}
+            <button onClick={this.props.onRequestLoadExchangeRates}>
+              Try again
+            </button>
+          </p>
+        );
+      }
+    }
+  };
+
   render() {
     const {
       sourceCurrencyId,
@@ -51,9 +82,7 @@ export class AppView extends React.Component<Props> {
     return (
       <form action="" className={styles.root} onSubmit={this.handleSubmit}>
         <h1 className={styles.title}>Foreign exchange</h1>
-        <p>
-          1 {sourceCurrencyId} = {this.props.exchangeRate} {targetCurrencyId}
-        </p>
+        {this.renderExchangeRate()}
 
         <fieldset>
           <legend>From</legend>
