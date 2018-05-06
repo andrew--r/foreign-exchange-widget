@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+import * as React from 'react';
 
-export function App(props) {
+type Props = {|
+  children: React.Node,
+|};
+
+export function App(props: Props) {
   return <div>{props.children}</div>;
 }
-
-App.propTypes = {
-  children: PropTypes.node,
-};
