@@ -5,20 +5,20 @@ import {
   setSourceCurrency,
   setTargetCurrency,
   setExchangeAmount,
-} from '~/state/currency-exchange/actions';
+} from '~/state/foreign-exchange/actions';
 
 import type { State } from '~/state';
 
 export const App = connect(
-  ({ user, currencyExchange }: State) => ({
+  ({ user, foreignExchange }: State) => ({
     availableCurrencyIds: user.currencyIds,
-    sourceCurrencyId: currencyExchange.sourceCurrencyId,
-    targetCurrencyId: currencyExchange.targetCurrencyId,
+    sourceCurrencyId: foreignExchange.sourceCurrencyId,
+    targetCurrencyId: foreignExchange.targetCurrencyId,
     sourceCurrencyWallet:
-      user.walletByCurrency[currencyExchange.sourceCurrencyId],
+      user.walletByCurrency[foreignExchange.sourceCurrencyId],
     targetCurrencyWallet:
-      user.walletByCurrency[currencyExchange.targetCurrencyId],
-    exchangeAmount: currencyExchange.amount,
+      user.walletByCurrency[foreignExchange.targetCurrencyId],
+    exchangeAmount: foreignExchange.amount,
   }),
   {
     onChangeSourceCurrency: setSourceCurrency,

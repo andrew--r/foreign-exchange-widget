@@ -49,7 +49,7 @@ export class AppView extends React.Component<Props> {
 
     return (
       <form action="" className={styles.root} onSubmit={this.handleSubmit}>
-        <h1 className={styles.title}>Currency exchange</h1>
+        <h1 className={styles.title}>Foreign exchange</h1>
         <p>1 GBP = 1.34 EUR</p>
 
         <fieldset>

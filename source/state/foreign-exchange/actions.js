@@ -41,7 +41,7 @@ export function setExchangeAmount(amount: number): SetExchangeAmountAction {
   };
 }
 
-export type CurrencyExchangeAction =
+export type ForeignExchangeAction =
   | SetSourceCurrencyAction
   | SetTargetCurrencyAction
   | SetExchangeAmountAction;
