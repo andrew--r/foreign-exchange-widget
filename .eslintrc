@@ -21,6 +21,7 @@
     "no-plusplus": 0,
     "max-len": 0,
     "no-return-assign": 0,
+    "no-useless-escape": 0,
     "indent": [
       "error",
       2,
@@ -46,6 +47,7 @@
     ],
     "arrow-parens": ["error", "always"],
 
+    "import/first": 0,
     "import/prefer-default-export": 0,
     "import/no-default-export": 2,
     "import/no-extraneous-dependencies": [

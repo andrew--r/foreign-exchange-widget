@@ -17,7 +17,7 @@
     "build": "NODE_ENV=production webpack",
     "test": "npm-run-all --parallel test:*",
     "test:types": "flow",
-    "test:unit": "jest --silent",
+    "test:unit": "jest --silent --passWithNoTests",
     "test:lint": "eslint source webpack",
     "precommit": "lint-staged && npm test"
   },
@@ -31,7 +31,9 @@
     "prop-types": "15.6.1",
     "react": "16.3.2",
     "react-dom": "16.3.2",
-    "react-hot-loader": "4.1.2"
+    "react-hot-loader": "4.1.2",
+    "react-redux": "5.0.7",
+    "redux": "4.0.0"
   },
   "devDependencies": {
     "@storybook/react": "3.4.3",
