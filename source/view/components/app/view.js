@@ -47,30 +47,21 @@ export class AppView extends React.Component<Props> {
   renderExchangeRate = () => {
     let content;
 
-    switch (this.props.ratesDataState) {
-      case 'loading': {
-        content = 'Loading exchange rate...';
-        break;
-      }
-
-      case 'loaded': {
-        content = `1 ${this.props.sourceCurrencyId} = ${
-          this.props.exchangeRate
-        } ${this.props.targetCurrencyId}`;
-        break;
-      }
-
-      default: {
-        content = (
-          <React.Fragment>
-            Failed to load exchange rates{' '}
-            <button onClick={this.props.onRequestLoadExchangeRates}>
-              Try again
-            </button>
-          </React.Fragment>
-        );
-        break;
-      }
+    if (!window.isNaN(this.props.exchangeRate)) {
+      content = `1 ${this.props.sourceCurrencyId} = ${
+        this.props.exchangeRate
+      } ${this.props.targetCurrencyId}`;
+    } else if (this.props.ratesDataState === 'loading') {
+      content = 'Loading exchange rate...';
+    } else {
+      content = (
+        <React.Fragment>
+          Failed to load exchange rates{' '}
+          <button onClick={this.props.onRequestLoadExchangeRates}>
+            Try again
+          </button>
+        </React.Fragment>
+      );
     }
 
     return <p className={styles.annotation}>{content}</p>;

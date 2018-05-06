@@ -1,6 +1,6 @@
 # Foreign exchange widget
 
-Based on [react boilerplate](git@github.com:andrew--r/react-boilerplate.git).
+Based on [react boilerplate](https://github.com/andrew--r/react-boilerplate).
 
 ```bash
 npm start # starts dev server with hot reloading
@@ -16,6 +16,8 @@ Widget is relatively simple, so view is not decomposed to multiple atomic compon
 [currencylayer API](https://currencylayer.com/) provides an ability to set base currency only in paid version of API, so cross-currency exchange rates are automatically derived from base currency rates.
 
 There is no fancy UI because I didn't have much time, and ugly but working product is better than beautiful but useless product.
+
+Currencies are hardcoded, normally they should be loaded from server.
 
 ## Potential improvements
 
