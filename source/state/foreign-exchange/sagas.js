@@ -31,6 +31,6 @@ export function* foreignExchangeSaga() {
 
   while (true) {
     yield put(requestLoadExchangeRates());
-    yield delay(1000000);
+    yield delay(1000 * 10);
   }
 }
