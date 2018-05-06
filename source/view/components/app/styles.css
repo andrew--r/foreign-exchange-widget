@@ -19,3 +19,24 @@
   margin: 0;
   font-size: 2em;
 }
+
+.annotation {
+  margin: 0;
+  padding-bottom: 1.5em;
+}
+
+.fieldset {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.fieldset + .fieldset {
+  margin-top: 1em;
+}
+
+.error {
+  color: red;
+}
+
+.footer {
+  padding-top: 1em;
+}

@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import cn from 'classnames';
 import styles from './styles.css';
 
 import type { DataState } from '~/common/types/common';
@@ -44,31 +45,35 @@ export class AppView extends React.Component<Props> {
   };
 
   renderExchangeRate = () => {
+    let content;
+
     switch (this.props.ratesDataState) {
       case 'loading': {
-        return <p>Loading exchange rate...</p>;
+        content = 'Loading exchange rate...';
+        break;
       }
 
       case 'loaded': {
-        return (
-          <p>
-            1 {this.props.sourceCurrencyId} = {this.props.exchangeRate}{' '}
-            {this.props.targetCurrencyId}
-          </p>
-        );
+        content = `1 ${this.props.sourceCurrencyId} = ${
+          this.props.exchangeRate
+        } ${this.props.targetCurrencyId}`;
+        break;
       }
 
       default: {
-        return (
-          <p>
+        content = (
+          <React.Fragment>
             Failed to load exchange rates{' '}
             <button onClick={this.props.onRequestLoadExchangeRates}>
               Try again
             </button>
-          </p>
+          </React.Fragment>
         );
+        break;
       }
     }
+
+    return <p className={styles.annotation}>{content}</p>;
   };
 
   render() {
@@ -78,13 +83,15 @@ export class AppView extends React.Component<Props> {
       targetCurrencyId,
       targetCurrencyWallet,
     } = this.props;
+    const exchangeAmountExceedsWalletBalance =
+      this.props.exchangeAmount > this.props.sourceCurrencyWallet.balance;
 
     return (
       <form action="" className={styles.root} onSubmit={this.handleSubmit}>
         <h1 className={styles.title}>Foreign exchange</h1>
         {this.renderExchangeRate()}
 
-        <fieldset>
+        <fieldset className={styles.fieldset}>
           <legend>From</legend>
 
           <div>
@@ -105,13 +112,17 @@ export class AppView extends React.Component<Props> {
               onChange={this.handleChangeExchangeAmount}
             />
           </div>
-          <p>
+          <p
+            className={cn({
+              [styles.error]: exchangeAmountExceedsWalletBalance,
+            })}
+          >
             You have {sourceCurrencyWallet.balance}{' '}
             {sourceCurrencyWallet.currencyId}
           </p>
         </fieldset>
 
-        <fieldset>
+        <fieldset className={styles.fieldset}>
           <legend>To</legend>
           <div>
             <select
@@ -136,9 +147,18 @@ export class AppView extends React.Component<Props> {
           </p>
         </fieldset>
 
-        <button type="submit" disabled={sourceCurrencyId === targetCurrencyId}>
-          Exchange
-        </button>
+        <footer className={styles.footer}>
+          <button
+            type="submit"
+            disabled={
+              this.props.exchangeAmount === 0 ||
+              sourceCurrencyId === targetCurrencyId ||
+              exchangeAmountExceedsWalletBalance
+            }
+          >
+            Exchange
+          </button>
+        </footer>
       </form>
     );
   }
