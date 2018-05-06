@@ -12,6 +12,7 @@ type Props = {|
   targetCurrencyId: CurrencyId,
   targetCurrencyWallet: Wallet,
   exchangeAmount: number,
+  exchangeRate: number,
   onChangeSourceCurrency(CurrencyId): void,
   onChangeTargetCurrency(CurrencyId): void,
   onChangeExchangeAmount(number): void,
@@ -50,7 +51,9 @@ export class AppView extends React.Component<Props> {
     return (
       <form action="" className={styles.root} onSubmit={this.handleSubmit}>
         <h1 className={styles.title}>Foreign exchange</h1>
-        <p>1 GBP = 1.34 EUR</p>
+        <p>
+          1 {sourceCurrencyId} = {this.props.exchangeRate} {targetCurrencyId}
+        </p>
 
         <fieldset>
           <legend>From</legend>
@@ -67,7 +70,7 @@ export class AppView extends React.Component<Props> {
               ))}
             </select>
             <input
-              type="text"
+              type="number"
               placeholder="Amount"
               value={this.props.exchangeAmount}
               onChange={this.handleChangeExchangeAmount}
@@ -92,7 +95,11 @@ export class AppView extends React.Component<Props> {
                 </option>
               ))}
             </select>
-            <input type="text" readOnly />
+            <input
+              readOnly
+              type="number"
+              value={this.props.exchangeAmount * this.props.exchangeRate}
+            />
           </div>
 
           <p>

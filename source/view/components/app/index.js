@@ -1,25 +1,34 @@
 // @flow
 import { connect } from 'react-redux';
-import { AppView } from './view';
 import {
   setSourceCurrency,
   setTargetCurrency,
   setExchangeAmount,
 } from '~/state/foreign-exchange/actions';
+import { calculateExchangeRate } from '~/state/foreign-exchange/selectors';
+import { AppView } from './view';
 
 import type { State } from '~/state';
 
 export const App = connect(
-  ({ user, foreignExchange }: State) => ({
-    availableCurrencyIds: user.currencyIds,
-    sourceCurrencyId: foreignExchange.sourceCurrencyId,
-    targetCurrencyId: foreignExchange.targetCurrencyId,
-    sourceCurrencyWallet:
-      user.walletByCurrency[foreignExchange.sourceCurrencyId],
-    targetCurrencyWallet:
-      user.walletByCurrency[foreignExchange.targetCurrencyId],
-    exchangeAmount: foreignExchange.amount,
-  }),
+  (state: State) => {
+    const { user, foreignExchange } = state;
+    const { sourceCurrencyId, targetCurrencyId } = foreignExchange;
+
+    return {
+      sourceCurrencyId,
+      targetCurrencyId,
+      availableCurrencyIds: user.currencyIds,
+      sourceCurrencyWallet: user.walletByCurrency[sourceCurrencyId],
+      targetCurrencyWallet: user.walletByCurrency[targetCurrencyId],
+      exchangeAmount: foreignExchange.amount,
+      exchangeRate: calculateExchangeRate({
+        state,
+        sourceCurrencyId,
+        targetCurrencyId,
+      }),
+    };
+  },
   {
     onChangeSourceCurrency: setSourceCurrency,
     onChangeTargetCurrency: setTargetCurrency,

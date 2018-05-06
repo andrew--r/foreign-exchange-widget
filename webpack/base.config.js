@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { sourceDir, buildDir, nodeEnv, isDebugEnabled } = require('./common');
 
 const config = {
-  entry: [`${sourceDir}/index.js`, `${sourceDir}/global.css`],
+  entry: ['babel-polyfill', `${sourceDir}/index.js`, `${sourceDir}/global.css`],
 
   output: {
     path: buildDir,
